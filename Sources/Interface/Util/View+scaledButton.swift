@@ -8,7 +8,6 @@ struct MyAnimationButton: ButtonStyle {
 }
 
 extension View {
-    
     func addPressAnimation(_ isPressed: Bool) -> some View {
         self
             .opacity(isPressed ? 0.64 : 1)
