@@ -25,12 +25,25 @@ private struct ColorBox {
 
 private extension Colorable {
     var color: Color {
-        @Environment(\.colorScheme) var colorScheme
-        return if colorScheme == .light {
-            box.light
+#if canImport(UIKit)
+        Color(UIColor {
+            if $0.userInterfaceStyle == .dark {
+                UIColor(box.dark)
+            } else {
+                UIColor(box.light)
+            }
+        })
+#elseif canImport(AppKit)
+        if let appearance = NSApplication.shared.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua, .vibrantDark, .vibrantLight]) {
+            if [.darkAqua, .vibrantDark].contains(appearance) {
+                box.dark
+            } else {
+                box.light
+            }
         } else {
-            box.dark
+            box.light
         }
+#endif
     }
 }
 
@@ -65,7 +78,7 @@ public enum Colors {
             case .normal: ColorBox(P.neutral97, P.neutral20)
             case .neutral: ColorBox(P.neutral95, P.neutral25)
             case .alternative: ColorBox(P.neutral90, P.neutral30)
-            case .assistive: ColorBox(P.common100, P.neutral40)
+            case .assistive: ColorBox(.white, P.neutral40)
             }
         }
     }
@@ -116,18 +129,27 @@ private struct ColorsPreview: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
+                Text("Label")
                 ForEach(Colors.Label.allCases, id: \.self) {
                     $0.color.frame(height: 30)
                 }
+                
+                Text("Line")
                 ForEach(Colors.Line.allCases, id: \.self) {
                     $0.color.frame(height: 30)
                 }
+                
+                Text("Fill")
                 ForEach(Colors.Fill.allCases, id: \.self) {
                     $0.color.frame(height: 30)
                 }
+                
+                Text("Background")
                 ForEach(Colors.Background.allCases, id: \.self) {
                     $0.color.frame(height: 30)
                 }
+                
+                Text("Primary")
                 ForEach(Colors.Primary.allCases, id: \.self) {
                     $0.color.frame(height: 30)
                 }

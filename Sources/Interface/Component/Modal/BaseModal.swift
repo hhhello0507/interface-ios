@@ -23,13 +23,13 @@ struct BaseModal<MC: View, C: View>: View {
                 if isPresent {
                     modalContent()
                         .background(backgroundColor)
-                        .cornerRadius(cornerRadius)
+                        .clipShape(.rect(cornerRadius: cornerRadius))
                         .scaleEffect(scaleEffect)
                         .opacity(opacity)
                 } else {
                     modalContent()
                         .background(backgroundColor)
-                        .cornerRadius(cornerRadius)
+                        .clipShape(.rect(cornerRadius: cornerRadius))
                         .opacity(opacity)
                 }
                 Spacer()

@@ -31,7 +31,7 @@ public struct GoogleSignInButton: View {
             .frame(maxWidth: .infinity)
             .background(.white)
             .clipShape(.rect(cornerRadius: 8))
-            .strokeBorder(8, content: Color(0xFFE6E6E6), lineWidth: 1)
+            .strokeBorder(8, content: .line(.normal), lineWidth: 1)
         }
         .scaledButton()
     }

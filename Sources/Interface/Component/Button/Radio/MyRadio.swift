@@ -1,17 +1,16 @@
 import SwiftUI
 
 public struct MyRadio: View {
+    @Environment(\.isEnabled) private var isEnabled
+    
     private let selected: Bool
-    private let isEnabled: Bool
     private let action: () -> Void
     
     public init(
         selected: Bool,
-        isEnabled: Bool = true,
         action: @escaping () -> Void
     ) {
         self.selected = selected
-        self.isEnabled = isEnabled
         self.action = action
     }
     
@@ -19,25 +18,16 @@ public struct MyRadio: View {
         Button {
             action()
         } label: {
-            Group {
-                if selected {
-                    Circle()
-                        .frame(width: 10.5, height: 10.5)
-//                        .stroke(5.25, content: Colors.Primary.normal, lineWidth: 5)
-                        .foregroundStyle(.clear)
-                } else {
-                    Circle()
-                        .frame(width: 14, height: 14)
-//                        .stroke(7, content: Colors.Line.normal.color, lineWidth: 2)
-                        .foregroundStyle(.clear)
-                }
-            }
-            .padding(3)
+            Circle()
+                .strokeBorder(selected ? .primary(.normal) : .line(.normal), lineWidth: selected ? 5 : 2)
+                .frame(width: 18, height: 18)
+                .foregroundStyle(.clear)
+                .padding(3)
+                .padding(8)
+                .frame(width: 40, height: 40)
         }
         .scaledButton()
-        .frame(width: 40, height: 40)
-        .disabled(!isEnabled)
-        .opacity(selected ? 1 : 0.5)
+        .opacity(isEnabled ? 1 : 0.5)
     }
 }
 
@@ -50,9 +40,10 @@ public struct MyRadio: View {
                 MyRadio(selected: isChecked) {
                     isChecked.toggle()
                 }
-                MyRadio(selected: isChecked, isEnabled: false) {
+                MyRadio(selected: isChecked) {
                     isChecked.toggle()
                 }
+                .disabled(true)
                 MyRadio(selected: false) {
                     isChecked.toggle()
                 }

@@ -1,11 +1,11 @@
 import SwiftUI
 import Combine
 
-public protocol SegmentedButtonProtocol: Hashable {
+public protocol SegmentedControlsProtocol: Hashable {
     var text: String { get }
 }
 
-public struct MySegmentedButton<T: SegmentedButtonProtocol>: View {
+public struct MySegmentedControls<T: SegmentedControlsProtocol>: View {
     
     private let data: [T]
     @Namespace private var animation
@@ -34,14 +34,14 @@ public struct MySegmentedButton<T: SegmentedButtonProtocol>: View {
                     }
                 } label: {
                     Text(item.text)
-                        .myFont(.headlineM)
+                        .myFont(.labelM)
                         .foregroundStyle(.label(.normal))
                         .opacity(isSelected ? 1 : 0.5)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background {
                             if isSelected {
                                 RoundedRectangle(cornerRadius: 8)
-                                    .foregroundStyle(.fill(.assistive))
+                                    .fill(.fill(.assistive))
                                     .matchedGeometryEffect(id: "background", in: animation)
                                     .shadow(.neutral10)
                             } else {
@@ -53,11 +53,11 @@ public struct MySegmentedButton<T: SegmentedButtonProtocol>: View {
                 .zIndex(isSelected ? 1 : 0)
             }
         }
-        .padding(4)
-        .frame(height: 48)
+        .padding(2)
+        .frame(height: 32)
         .frame(maxWidth: .infinity)
         .background(.fill(.neutral))
-        .cornerRadius(12)
+        .clipShape(.rect(cornerRadius: 12))
         .onChange(of: selected) { newValue in
             selection.wrappedValue = newValue
             withAnimation(.spring(duration: 0.2)) {
@@ -72,9 +72,9 @@ public struct MySegmentedButton<T: SegmentedButtonProtocol>: View {
     }
 }
 
-private struct SegmentedButtonPreview: View {
+private struct SegmentedControlsPreview: View {
     
-    struct Item: SegmentedButtonProtocol {
+    struct Item: SegmentedControlsProtocol {
         var text: String
     }
     
@@ -86,15 +86,15 @@ private struct SegmentedButtonPreview: View {
     @State private var selection = Item(text: "Label1")
     
     var body: some View {
-        MySegmentedButton(data, selection: $selection)
+        MySegmentedControls(data, selection: $selection)
     }
 }
 
 #Preview {
-    SegmentedButtonPreview()
+    SegmentedControlsPreview()
 }
 
 #Preview {
-    SegmentedButtonPreview()
+    SegmentedControlsPreview()
         .preferredColorScheme(.dark)
 }

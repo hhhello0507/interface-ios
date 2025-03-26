@@ -89,7 +89,4 @@ public enum Palette {
     static let purple30 = Color(0x450495)
     static let purple20 = Color(0x2E0363)
     static let purple10 = Color(0x170132)
-    
-    static let common00 = Color(red: 1, green: 1, blue: 1)
-    static let common100 = Color(red: 0, green: 0, blue: 0)
 }

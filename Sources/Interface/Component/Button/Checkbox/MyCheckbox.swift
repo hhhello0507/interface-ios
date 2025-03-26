@@ -1,16 +1,13 @@
 import SwiftUI
 
 public struct MyCheckbox: View {
-    
+    @Environment(\.isEnabled) private var isEnabled
     @Binding private var isOn: Bool
-    private let isEnabled: Bool
     
     public init(
-        isOn: Binding<Bool>,
-        isEnabled: Bool = true
+        isOn: Binding<Bool>
     ) {
         self._isOn = isOn
-        self.isEnabled = isEnabled
     }
     
     public var body: some View {
@@ -28,7 +25,7 @@ public struct MyCheckbox: View {
                         .background {
                             if isOn {
                                 Color.primary(.normal)
-                                    .cornerRadius(4)
+                                    .clipShape(.rect(cornerRadius: 4))
                                     .opacity(isEnabled ? 1 : 0.5)
                             }
                         }
@@ -36,15 +33,14 @@ public struct MyCheckbox: View {
                     RoundedRectangle(cornerRadius: 4)
                         .fill(.clear)
                         .strokeBorder(4, content: .line(.normal), lineWidth: 2)
-                        .frame(width: 16, height: 16)
+                        .frame(width: 18, height: 18)
                         .opacity(isEnabled ? 1 : 0.5)
                 }
             }
             .padding(3)
+            .frame(width: 40, height: 40)
         }
         .scaledButton()
-        .frame(width: 40, height: 40)
-        .disabled(!isEnabled)
     }
 }
 
@@ -55,7 +51,7 @@ public struct MyCheckbox: View {
         var body: some View {
             VStack(spacing: 20) {
                 MyCheckbox(isOn: $isChecked)
-                MyCheckbox(isOn: $isChecked, isEnabled: false)
+                MyCheckbox(isOn: $isChecked).disabled(true)
             }
             .padding(16)
             .background(.background(.normal))

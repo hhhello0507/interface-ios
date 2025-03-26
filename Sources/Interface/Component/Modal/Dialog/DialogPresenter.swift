@@ -53,7 +53,7 @@ public struct MyDialogPresenter<C: View>: View {
                             } else {
                                 HStack {
                                     Spacer()
-                                    MyButton(secondaryButton.title, size: .medium, role: .text, foreground: .primary(.normal)) {
+                                    MyButton(secondaryButton.title, size: .medium, role: .assistive) {
                                         secondaryButton.action()
                                         dismiss()
                                     }
@@ -63,12 +63,12 @@ public struct MyDialogPresenter<C: View>: View {
                             HStack {
                                 Spacer()
                                 if let primaryButton = dialog.primaryButton {
-                                    MyButton(primaryButton.title, size: .medium, role: .text, foreground: .primary(.normal)) {
+                                    MyButton(primaryButton.title, size: .medium, role: .assistive) {
                                         primaryButton.action()
                                         dismiss()
                                     }
                                 } else {
-                                    MyButton("닫기", size: .medium, role: .text, foreground: .primary(.normal)) {
+                                    MyButton("닫기", size: .medium) {
                                         dismiss()
                                     }
                                 }

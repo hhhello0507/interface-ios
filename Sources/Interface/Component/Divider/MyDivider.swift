@@ -9,7 +9,7 @@ public enum DividerType {
         switch self {
         case .small: 1
         case .medium: 8
-        case .large: 14
+        case .large: 12
         }
     }
 }
@@ -24,9 +24,9 @@ public struct MyDivider: View {
     }
     
     public var body: some View {
-        Divider()
+        Rectangle()
+            .fill(.line(.normal))
             .frame(height: type.height)
-            .foregroundStyle(.line(.normal))
     }
 }
 

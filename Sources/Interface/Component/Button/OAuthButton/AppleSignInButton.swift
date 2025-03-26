@@ -8,7 +8,6 @@
 import SwiftUI
 
 public struct AppleSignInButton: View {
-    
     private let action: () -> Void
     
     public init(action: @escaping () -> Void) {
@@ -40,7 +39,6 @@ public struct AppleSignInButton: View {
 
 #Preview {
     AppleSignInButton {
-        
     }
     .registerWanted()
 }

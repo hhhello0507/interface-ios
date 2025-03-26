@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct MyToggle: View {
-    
     @Binding var isOn: Bool
     
     public init(
