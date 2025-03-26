@@ -21,13 +21,12 @@ struct MyBottomAppBarItem: View {
                     .resizable()
                     .renderingMode(.template)
                     .foregroundStyle(color)
-                    .frame(width: 28, height: 28)
+                    .frame(width: 30, height: 30)
                 Text(page.text)
                     .font(.wanted(.Regular, size: 10))
                     .foregroundStyle(color)
             }
             .padding(.vertical, 4)
-            .opacity(isSelected ? 1 : 0.5)
             Spacer()
         }
     }
