@@ -8,7 +8,6 @@
 import Foundation
 
 public struct Dialog {
-    
     let title: String
     let message: String?
     let secondaryButton: DialogButton?

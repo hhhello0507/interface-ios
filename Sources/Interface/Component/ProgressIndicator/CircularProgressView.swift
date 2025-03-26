@@ -5,16 +5,16 @@ public struct MyCircularProgressView: View {
     @State private var animatedProgress: CGFloat = 0
     
     private let progress: CGFloat
-    private let background: Colorable?
+    private let background: Color?
     private let isEnabled: Bool
     
-    private var foregroundColor: Colorable {
-        isEnabled ? Colors.Primary.normal : Colors.Label.alternative
+    private var foregroundColor: Color {
+        isEnabled ? .primary(.normal) : .label(.alternative)
     }
     
     public init(
         progress: CGFloat,
-        background: Colorable? = nil,
+        background: Color? = nil,
         isEnabled: Bool = true
     ) {
         self.progress = progress
@@ -22,7 +22,7 @@ public struct MyCircularProgressView: View {
         self.isEnabled = isEnabled
     }
     
-    public func background(_ background: Colorable) -> Self {
+    public func background(_ background: Color) -> Self {
         .init(
             progress: self.progress,
             background: background,
@@ -42,7 +42,7 @@ public struct MyCircularProgressView: View {
         ZStack {
             Circle()
                 .stroke(lineWidth: 10)
-                .foreground(background ?? Colors.Line.normal)
+                .foregroundStyle(background ?? .line(.normal))
             Circle()
                 .trim(from: 0, to: min(animatedProgress, 1))
                 .stroke(
@@ -53,7 +53,7 @@ public struct MyCircularProgressView: View {
                             lineJoin: .round
                         )
                 )
-                .foreground(foregroundColor)
+                .foregroundStyle(foregroundColor)
                 .rotationEffect(.degrees(270))
                 .animation(.linear, value: progress)
                 .opacity(isEnabled ? 1 : 0.4)

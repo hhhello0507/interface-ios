@@ -1,8 +1,6 @@
 import SwiftUI
 
-// TODO: Can use it for Widget target.
 public struct Wanted {
-    
     public enum Weight: String, CaseIterable {
         case Black
         case Bold

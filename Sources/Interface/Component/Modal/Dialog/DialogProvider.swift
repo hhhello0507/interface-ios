@@ -1,6 +1,6 @@
 import Foundation
 
-public final class DialogProvider: ObservableObject, ModalProvider {
+public final class DialogProvider: ObservableObject {
     @Published var isPresent = false
     
     @Published var dialog: Dialog?

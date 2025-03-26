@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct Page {
     public let content: AnyView
-    public let icon: Iconable
+    public let icon: Image
     public let text: String
     
     @resultBuilder
@@ -15,7 +15,7 @@ public struct Page {
     }
     
     public init<C: View>(
-        icon: Iconable,
+        icon: Image,
         text: String,
         @ViewBuilder content: @escaping () -> C
     ) {
@@ -26,7 +26,7 @@ public struct Page {
 }
 
 public extension View {
-    func page(icon: Iconable, text: String) -> Page {
+    func page(icon: Image, text: String) -> Page {
         Page(icon: icon, text: text) { self }
     }
 }

@@ -20,18 +20,18 @@ public struct GoogleSignInButton: View {
             action()
         } label: {
             HStack(spacing: 8) {
-                Image(icon: Icons.Color.GoogleLogo)
+                Image.icon(.GoogleLogo)
                     .resizable()
                     .frame(width: 20, height: 20)
                 Text("Google로 계속하기")
                     .myFont(.bodyM)
-                    .foreground(Colors.Static.black)
+                    .foregroundStyle(.black)
             }
             .frame(height: 52)
             .frame(maxWidth: .infinity)
-            .background(Colors.Static.white)
-            .cornerRadius(8, corners: .allCorners)
-            .stroke(8, content: Color(0xFFE6E6E6))
+            .background(.white)
+            .clipShape(.rect(cornerRadius: 8))
+            .strokeBorder(8, content: Color(0xFFE6E6E6), lineWidth: 1)
         }
         .scaledButton()
     }

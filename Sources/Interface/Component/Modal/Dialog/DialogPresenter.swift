@@ -1,8 +1,7 @@
 import SwiftUI
 import Combine
 
-public struct MyDialogPresenter<C: View>: ModalViewProtocol {
-    
+public struct MyDialogPresenter<C: View>: View {
     @StateObject private var provider: DialogProvider
     
     let content: () -> C
@@ -29,12 +28,12 @@ public struct MyDialogPresenter<C: View>: ModalViewProtocol {
                     HStack {
                         VStack(alignment: .leading, spacing: 12) {
                             Text(dialog.title)
-                                .myFont(.headling2B)
-                                .foreground(Colors.Label.strong)
+                                .myFont(.title3B)
+                                .foregroundStyle(.label(.normal))
                             if let message = dialog.message {
                                 Text(message)
                                     .myFont(.bodyM)
-                                    .foreground(Colors.Label.alternative)
+                                    .foregroundStyle(.label(.alternative))
                             }
                         }
                         Spacer()
@@ -54,28 +53,24 @@ public struct MyDialogPresenter<C: View>: ModalViewProtocol {
                             } else {
                                 HStack {
                                     Spacer()
-                                    MyButton.text(secondaryButton.title, foreground: Colors.Primary.normal) {
+                                    MyButton(secondaryButton.title, size: .medium, role: .text, foreground: .primary(.normal)) {
                                         secondaryButton.action()
                                         dismiss()
                                     }
-                                    .size(.medium)
                                 }
                             }
                         } else {
                             HStack {
                                 Spacer()
                                 if let primaryButton = dialog.primaryButton {
-                                    MyButton.text(primaryButton.title, foreground: Colors.Primary.normal) {
+                                    MyButton(primaryButton.title, size: .medium, role: .text, foreground: .primary(.normal)) {
                                         primaryButton.action()
                                         dismiss()
                                     }
-                                    .size(.medium)
                                 } else {
-                                    
-                                    MyButton.text("닫기", foreground: Colors.Primary.normal) {
+                                    MyButton("닫기", size: .medium, role: .text, foreground: .primary(.normal)) {
                                         dismiss()
                                     }
-                                    .size(.medium)
                                 }
                             }
                         }

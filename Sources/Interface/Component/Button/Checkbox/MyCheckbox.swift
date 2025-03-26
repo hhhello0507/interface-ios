@@ -19,15 +19,15 @@ public struct MyCheckbox: View {
         } label: {
             Group {
                 if isOn {
-                    Image(icon: Icons.Mark.CheckLine)
+                    Image.icon(.CheckLine)
                         .resizable()
                         .renderingMode(.template)
                         .frame(width: 14, height: 14)
-                        .foreground(Colors.Static.white)
+                        .foregroundStyle(.white)
                         .padding(2)
                         .background {
                             if isOn {
-                                Colors.Primary.normal.box.color
+                                Color.primary(.normal)
                                     .cornerRadius(4)
                                     .opacity(isEnabled ? 1 : 0.5)
                             }
@@ -35,7 +35,7 @@ public struct MyCheckbox: View {
                 } else {
                     RoundedRectangle(cornerRadius: 4)
                         .fill(.clear)
-                        .stroke(4, content: Colors.Line.normal.box.color, lineWidth: 2)
+                        .strokeBorder(4, content: .line(.normal), lineWidth: 2)
                         .frame(width: 16, height: 16)
                         .opacity(isEnabled ? 1 : 0.5)
                 }
@@ -58,7 +58,7 @@ public struct MyCheckbox: View {
                 MyCheckbox(isOn: $isChecked, isEnabled: false)
             }
             .padding(16)
-            .background(Colors.Background.normal)
+            .background(.background(.normal))
             .registerWanted()
         }
     }

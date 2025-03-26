@@ -46,7 +46,7 @@ public struct MyFilledTextField: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Label")
                 .myFont(.labelM)
-                .foreground(
+                .foregroundStyle(
                     isError
                     ? colors.errorColor
                     : focused
@@ -82,24 +82,20 @@ public struct MyFilledTextField: View {
             .padding(.trailing, 12)
             .frame(height: 48)
             .padding(.vertical, 4)
-            .background(Colors.Background.normal.box.color, in: RoundedRectangle(cornerRadius: 12))
-            .overlay {
-                Rectangle()
-                    .fill(.clear)
-                    .stroke(
-                        12,
-                        color: isError
-                        ? colors.errorColor
-                        : focused
-                        ? colors.primaryColor
-                        : colors.strokeColor
-                    )
-            }
+            .background(.background(.normal), in: RoundedRectangle(cornerRadius: 12))
+            .strokeBorder(
+                12,
+                content: isError
+                ? colors.errorColor
+                : focused
+                ? colors.primaryColor
+                : colors.strokeColor
+            )
             .overlay {
                 if let supportText {
                     Text(supportText)
                         .myFont(.labelM)
-                        .foreground(
+                        .foregroundStyle(
                             isError
                             ? colors.errorColor
                             : colors.foregroundColor

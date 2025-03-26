@@ -67,7 +67,7 @@ public struct MyTextField: View {
         // Layout
         .overlay {
             Rectangle()
-                .foreground(
+                .foregroundStyle(
                     isError
                     ? colors.errorColor
                     : focused
@@ -81,7 +81,7 @@ public struct MyTextField: View {
             if let supportText {
                 Text(supportText)
                     .myFont(.labelM)
-                    .foreground(
+                    .foregroundStyle(
                         isError
                         ? colors.errorColor
                         : colors.foregroundColor

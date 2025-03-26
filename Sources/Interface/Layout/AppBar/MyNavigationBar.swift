@@ -9,11 +9,10 @@
 import SwiftUI
 
 public struct TopAppBarButton {
-    
-    public let icon: Iconable
+    public let icon: Image
     public let action: () -> Void
     
-    public init(icon: Iconable, action: @escaping () -> Void) {
+    public init(icon: Image, action: @escaping () -> Void) {
         self.icon = icon
         self.action = action
     }
@@ -25,22 +24,21 @@ public enum TopAppBarType {
 }
 
 @available(iOS 15.0, macOS 12.0, *)
-public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
-    
+public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
     private let edgeInsets = EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 15)
     
     @Environment(\.dismiss) private var dismiss
     
     private let title: String
     private let type: TopAppBarType
-    private let background: Colorable
+    private let background: Color
     private let buttons: [TopAppBarButton]
     private let trailingContent: () -> TC
     private let content: (EdgeInsets) -> C
     
     public static func `default`(
         title: String,
-        background: Colorable = Colors.Background.neutral,
+        background: Color = .background(.normal),
         buttons: [TopAppBarButton] = [],
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
         @ViewBuilder content: @escaping (EdgeInsets) -> C
@@ -57,7 +55,7 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
 
     public static func small(
         title: String,
-        background: Colorable = Colors.Background.neutral,
+        background: Color = .background(.normal),
         buttons: [TopAppBarButton] = [],
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
         @ViewBuilder content: @escaping (EdgeInsets) -> C
@@ -84,7 +82,7 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
     private func makeBody() -> some View {
         ZStack {
             // Background
-            background.box.color
+            background
                 .ignoresSafeArea()
             
             // Screen
@@ -95,10 +93,10 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
                         Button {
                             dismiss()
                         } label: {
-                            Image(icon: Icons.Arrow.ExpandArrow)
+                            Image.icon(.ExpandArrow)
                                 .resizable()
                                 .renderingMode(.template)
-                                .foreground(Colors.Label.normal)
+                                .foregroundStyle(.label(.normal))
                                 .frame(width: 24, height: 24)
                                 .padding(12)
                         }
@@ -109,7 +107,7 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
                     }
                     Text(title)
                         .myFont(type == .default ? .title1B : .headlineM)
-                        .foreground(Colors.Label.normal)
+                        .foregroundStyle(.label(.normal))
                     Spacer()
                     ForEach(buttons.indices, id: \.self) {
                         makeButton(button: buttons[$0])
@@ -129,11 +127,11 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
         Button {
             button.action()
         } label: {
-            Image(icon: button.icon)
+            button.icon
                 .resizable()
                 .renderingMode(.template)
                 .frame(width: 24, height: 24)
-                .foreground(Colors.Label.alternative)
+                .foregroundStyle(.label(.alternative))
                 .opacity(0.5)
                 .padding(12)
         }
@@ -141,10 +139,10 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
 }
 
 #Preview {
-    MyTopAppBar.default(
+    MyNavigationBar.default(
         title: "제목",
         buttons: [
-            .init(icon: Icons.Feature.Person) {
+            .init(icon: .icon(.Person)) {
                 
             }
         ]
@@ -155,7 +153,7 @@ public struct MyTopAppBar<C, TC>: View where C: View, TC: View {
 }
 
 #Preview {
-    MyTopAppBar.small(title: "제목") { _ in
+    MyNavigationBar.small(title: "제목") { _ in
         
     }
     .registerWanted()

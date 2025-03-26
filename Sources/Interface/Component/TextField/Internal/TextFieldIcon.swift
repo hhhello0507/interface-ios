@@ -16,36 +16,43 @@ internal struct TextFieldIcon: View {
     let colors: TextFieldColors
     let action: () -> Void
     
+    var icon: Icons {
+        if isError {
+            Icons.ExclamationFill
+        } else if isSecured {
+            if isHide {
+                Icons.Hide
+            } else {
+                Icons.Show
+            }
+        } else {
+            Icons.CrossFill
+        }
+    }
+    
     var body: some View {
         Button {
             if isEnabled {
                 action()
             }
         } label: {
-            Image(
-                icon:
+            Image.icon(icon)
+                .resizable()
+                .renderingMode(.template)
+                .foregroundStyle(
                     isError
-                ? Icons.Exclamation.ExclamationFill
-                : isSecured
-                ? Icons.Visible.of(isHide)
-                : Icons.Cross.CrossFill as Iconable
-            )
-            .resizable()
-            .renderingMode(.template)
-            .foreground(
-                isError
-                ? colors.errorColor
-                : colors.iconColor
-            )
-            .frame(width: 24, height: 24)
-            .padding(4)
-            .opacity(
-                isError
-                ? 1
-                : isEnabled
-                ? 0.5
-                : 0
-            )
+                    ? colors.errorColor
+                    : colors.iconColor
+                )
+                .frame(width: 24, height: 24)
+                .padding(4)
+                .opacity(
+                    isError
+                    ? 1
+                    : isEnabled
+                    ? 0.5
+                    : 0
+                )
         }
         .scaledButton()
     }

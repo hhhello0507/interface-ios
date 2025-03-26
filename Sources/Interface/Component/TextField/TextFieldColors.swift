@@ -5,29 +5,29 @@
 //  Created by hhhello0507 on 8/21/24.
 //
 
-import Foundation
+import SwiftUI
 
 public struct TextFieldColors {
     // defaut
-    public let hintColor: Colorable
-    public let strokeColor: Colorable
+    public let hintColor: Color
+    public let strokeColor: Color
 
     // unfocused
-    public let foregroundColor: Colorable
-    public let iconColor: Colorable
+    public let foregroundColor: Color
+    public let iconColor: Color
 
     // focused
-    public let primaryColor: Colorable // for indicator color
+    public let primaryColor: Color // for indicator color
     
     // error
-    public let errorColor: Colorable
+    public let errorColor: Color
     
     public static let `default` = TextFieldColors(
-        hintColor: Colors.Label.assistive,
-        strokeColor: Colors.Line.normal,
-        foregroundColor: Colors.Label.strong,
-        iconColor: Colors.Label.alternative,
-        primaryColor: Colors.Primary.normal,
-        errorColor: Colors.Status.negative
+        hintColor: .label(.assistive),
+        strokeColor: .line(.normal),
+        foregroundColor: .label(.assistive), // TODO: fix dummy
+        iconColor: .label(.alternative),
+        primaryColor: .primary(.normal),
+        errorColor: Palette.red50
     )
 }

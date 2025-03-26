@@ -7,8 +7,8 @@ public struct MyLinearProgressView: View {
     private let progress: CGFloat
     private let isEnabled: Bool
     
-    private var foregroundColor: Colorable {
-        isEnabled ? Colors.Primary.normal : Colors.Label.alternative
+    private var foregroundColor: Color {
+        isEnabled ? .primary(.normal) : .label(.alternative)
     }
     
     public init(
@@ -30,11 +30,11 @@ public struct MyLinearProgressView: View {
         GeometryReader { geometryProxy in
             ZStack(alignment: .leading) {
                 Capsule()
-                    .foreground(Colors.Line.normal)
+                    .foregroundStyle(.line(.normal))
                 let width = geometryProxy.size.width
                 Capsule()
                     .frame(width: width * animatedProgress)
-                    .foreground(foregroundColor)
+                    .foregroundStyle(foregroundColor)
                     .opacity(isEnabled ? 1 : 0.4)
             }
         }

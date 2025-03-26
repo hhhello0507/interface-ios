@@ -15,7 +15,6 @@ public enum DividerType {
 }
 
 public struct MyDivider: View {
-    
     private let type: DividerType
     
     public init(
@@ -25,10 +24,9 @@ public struct MyDivider: View {
     }
     
     public var body: some View {
-        Rectangle()
-            .frame(maxWidth: .infinity)
+        Divider()
             .frame(height: type.height)
-            .foreground(Colors.Line.normal)
+            .foregroundStyle(.line(.normal))
     }
 }
 

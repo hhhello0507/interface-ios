@@ -5,7 +5,7 @@
 //  Created by hhhello0507 on 8/19/24.
 //
 
-import Foundation
+import SwiftUI
 
 public enum ButtonRole: CaseIterable {
     case primary
@@ -13,39 +13,39 @@ public enum ButtonRole: CaseIterable {
     case assistive
     case text
     
-    var foreground: Colorable {
+    var foreground: Color {
         switch self {
-        case .primary: Colors.Static.white
-        case .secondary: Colors.Primary.normal
-        case .assistive: Colors.Label.neutral
-        case .text: Colors.Label.normal
+        case .primary: .white
+        case .secondary: .primary(.normal)
+        case .assistive: .label(.neutral)
+        case .text: .label(.normal)
         }
     }
     
-    var background: Colorable {
+    var background: Color {
         switch self {
-        case .primary: Colors.Primary.normal
-        case .secondary: Colors.Primary.assistive
-        case .assistive: Colors.Fill.neutral
-        case .text: Colors.Static.clear
+        case .primary: .primary(.normal)
+        case .secondary: .primary(.assistive)
+        case .assistive: .fill(.neutral)
+        case .text: .clear
         }
     }
     
-    var strokeForeground: Colorable {
+    var strokeForeground: Color {
         switch self {
-        case .primary: Colors.Primary.normal
-        case .secondary: Colors.Primary.normal
-        case .assistive: Colors.Label.neutral
-        case .text: Colors.Static.clear
+        case .primary: .primary(.normal)
+        case .secondary: .primary(.normal)
+        case .assistive: .label(.neutral)
+        case .text: .clear
         }
     }
     
-    var strokeColor: Colorable {
+    var strokeColor: Color {
         switch self {
-        case .primary: Colors.Primary.normal
-        case .secondary: Colors.Primary.assistive
-        case .assistive: Colors.Fill.neutral
-        case .text: Colors.Static.clear
+        case .primary: .primary(.normal)
+        case .secondary: .primary(.assistive)
+        case .assistive: .fill(.neutral)
+        case .text: .clear
         }
     }
 }

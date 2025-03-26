@@ -20,19 +20,19 @@ public struct AppleSignInButton: View {
             action()
         } label: {
             HStack(spacing: 8) {
-                Image(icon: Icons.Color.AppleLogo)
+                Image.icon(.AppleLogo)
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 18, height: 22)
-                    .foreground(Colors.Static.white)
+                    .foregroundStyle(.white)
                 Text("Apple로 계속하기")
                     .myFont(.bodyM)
-                    .foreground(Colors.Static.white)
+                    .foregroundStyle(.white)
             }
             .frame(height: 52)
             .frame(maxWidth: .infinity)
-            .background(Colors.Static.black)
-            .cornerRadius(8, corners: .allCorners)
+            .background(.black)
+            .clipShape(.rect(cornerRadius: 8))
         }
         .scaledButton()
     }

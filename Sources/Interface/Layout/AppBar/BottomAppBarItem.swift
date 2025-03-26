@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct MyBottomAppBarItem: View {
-    
     private let page: Page
     private let isSelected: Bool
     
@@ -14,18 +13,18 @@ struct MyBottomAppBarItem: View {
     }
     
     var body: some View {
-        let color: Colorable = isSelected ? Colors.Primary.normal : Colors.Label.assistive
+        let color: Color = isSelected ? .primary(.normal) : .label(.assistive)
         HStack {
             Spacer()
             VStack(spacing: 0) {
-                Image(icon: page.icon)
+                page.icon
                     .resizable()
                     .renderingMode(.template)
-                    .foreground(color)
+                    .foregroundStyle(color)
                     .frame(width: 28, height: 28)
                 Text(page.text)
                     .font(.wanted(.Regular, size: 10))
-                    .foreground(color)
+                    .foregroundStyle(color)
             }
             .padding(.vertical, 4)
             .opacity(isSelected ? 1 : 0.5)

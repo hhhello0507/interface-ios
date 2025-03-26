@@ -30,23 +30,23 @@ public struct MyRowView: View {
             HStack(spacing: 8) {
                 Text(title)
                     .myFont(.headlineM)
-                    .foreground(Colors.Label.normal)
+                    .foregroundStyle(.label(.normal))
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if let description {
                     Text(description)
                         .myFont(.bodyM)
-                        .foreground(Colors.Label.assistive)
+                        .foregroundStyle(.label(.assistive))
                 }
-                Image(icon: Icons.Arrow.ExpandArrow)
+                Image.icon(.ExpandArrow)
                     .resizable()
                     .renderingMode(.template)
-                    .foreground(Colors.Label.alternative)
+                    .foregroundStyle(.label(.alternative))
                     .frame(width: 12, height: 12)
                     .rotationEffect(.degrees(180))
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 8)
-            .background(Colors.Background.normal)
+            .background(.background(.normal))
         }
         .scaledButton()
     }

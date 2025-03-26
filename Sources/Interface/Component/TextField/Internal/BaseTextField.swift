@@ -50,19 +50,19 @@ internal struct BaseTextField: View {
                 SecureField(
                     hint,
                     text: $text,
-                    prompt: Text(hint).foreground(colors.hintColor)
+                    prompt: Text(hint).foregroundColor(colors.hintColor) // deprecated
                 )
             } else {
                 TextField(
                     hint,
                     text: $text,
-                    prompt: Text(hint).foreground(colors.hintColor)
+                    prompt: Text(hint).foregroundColor(colors.hintColor) // deprecated
                 )
             }
         }
         // style
         .myFont(font)
-        .foreground(colors.foregroundColor)
+        .foregroundStyle(colors.foregroundColor)
         .tint(
             isError
             ? colors.errorColor

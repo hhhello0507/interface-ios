@@ -22,7 +22,7 @@ public struct MyBottomAppBar: View {
                 }
             }
             Divider()
-                .foreground(Colors.Line.alternative)
+                .foregroundStyle(.line(.alternative))
             bottomBarBar
         }
     }
@@ -40,7 +40,7 @@ public struct MyBottomAppBar: View {
                 } label: {
                     MyBottomAppBarItem(page: page, isSelected: selected)
                         .frame(maxWidth: .infinity)
-                        .background(Colors.Background.neutral)
+                        .background(.background(.normal))
                 }
                 .scaledButton()
             }
@@ -49,7 +49,7 @@ public struct MyBottomAppBar: View {
         .padding(.horizontal, 8)
         .padding(.horizontal, -1)
         .padding(.bottom, -1)
-        .background(Colors.Background.neutral)
+        .background(.background(.normal))
 #if canImport(UIKit)
         .onChange(of: selection) { _ in
             let impactMed = UIImpactFeedbackGenerator(style: .rigid)
@@ -66,15 +66,15 @@ public struct MyBottomAppBar: View {
         var body: some View {
             MyBottomAppBar(selection: $selection) {
                 Text("WOW")
-                    .page(icon: Icons.ETC.Blank, text: "Tab")
+                    .page(icon: .icon(.Blank), text: "Tab")
                 Color.blue
-                    .page(icon: Icons.ETC.Blank, text: "Tab")
+                    .page(icon: .icon(.Blank), text: "Tab")
                 Color.orange
-                    .page(icon: Icons.ETC.Blank, text: "Tab")
+                    .page(icon: .icon(.Blank), text: "Tab")
                 EmptyView()
-                    .page(icon: Icons.ETC.Blank, text: "Tab")
+                    .page(icon: .icon(.Blank), text: "Tab")
                 EmptyView()
-                    .page(icon: Icons.ETC.Blank, text: "Tab")
+                    .page(icon: .icon(.Blank), text: "Tab")
             }
         }
     }

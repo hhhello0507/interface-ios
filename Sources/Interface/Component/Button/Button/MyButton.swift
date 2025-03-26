@@ -6,9 +6,9 @@ public struct MyButton: View {
     private let size: ButtonSize
     private let text: String
     private let role: ButtonRole
-    private let leadingIcon: Iconable?
-    private let trailingIcon: Iconable?
-    private let foreground: Colorable?
+    private let leadingIcon: Image?
+    private let trailingIcon: Image?
+    private let foreground: Color?
     private let isEnabled: Bool
     private let isLoading: Bool
     private let isRounded: Bool
@@ -20,7 +20,7 @@ public struct MyButton: View {
         isEnabled && !isLoading
     }
     
-    private var adjustedForeground: Colorable {
+    private var adjustedForeground: Color {
         if let foreground {
             foreground
         } else {
@@ -29,12 +29,12 @@ public struct MyButton: View {
     }
     
     public init(
-        size: ButtonSize = .larger,
         _ text: String,
+        size: ButtonSize = .larger,
         role: ButtonRole = .primary,
-        leadingIcon: Iconable? = nil,
-        trailingIcon: Iconable? = nil,
-        foreground: Colorable? = nil,
+        leadingIcon: Image? = nil,
+        trailingIcon: Image? = nil,
+        foreground: Color? = nil,
         isEnabled: Bool = true,
         isLoading: Bool = false,
         isRounded: Bool = false,
@@ -56,48 +56,6 @@ public struct MyButton: View {
         self.action = action
     }
     
-    public static func text(
-        _ text: String,
-        leadingIcon: Iconable? = nil,
-        trailingIcon: Iconable? = nil,
-        foreground: Colorable? = nil,
-        isEnabled: Bool = true,
-        isLoading: Bool = false,
-        action: @escaping () -> Void
-    ) -> Self {
-        Self.init(
-            size: .larger,
-            text,
-            role: .text,
-            leadingIcon: leadingIcon,
-            trailingIcon: trailingIcon,
-            foreground: foreground,
-            isEnabled: isEnabled,
-            isLoading: isLoading,
-            isRounded: false,
-            isStroke: false,
-            expanded: false,
-            action: action
-        )
-    }
-    
-    public func size(_ size: ButtonSize) -> Self {
-        .init(
-            size: size,
-            self.text,
-            role: role,
-            leadingIcon: leadingIcon,
-            trailingIcon: trailingIcon,
-            foreground: foreground,
-            isEnabled: isEnabled,
-            isLoading: isLoading,
-            isRounded: isRounded,
-            isStroke: isStroke,
-            expanded: expanded,
-            action: action
-        )
-    }
-    
     public var body: some View {
         Button {
             guard mergedEnabled else { return }
@@ -109,7 +67,7 @@ public struct MyButton: View {
                 }
                 Text(text)
                     .myFont(size.font)
-                    .foreground(adjustedForeground)
+                    .foregroundStyle(adjustedForeground)
                     .fixedSize()
                 if let trailingIcon {
                     makeIcon(icon: trailingIcon)
@@ -119,9 +77,9 @@ public struct MyButton: View {
             .padding(.horizontal, size.horizontalPadding)
             .frame(height: size.height)
             .opacity(!isLoading ? 1 : 0)
-            .background(isStroke ? Colors.Static.clear : role.background)
+            .background(isStroke ? .clear : role.background)
             .cornerRadius(isRounded ? size.height / 2 : size.cornerRadius)
-            .stroke(isRounded ? size.height / 2 : size.cornerRadius, content: role.strokeColor.box.color, lineWidth: isStroke ? 1 : 0)
+            .strokeBorder(isRounded ? size.height / 2 : size.cornerRadius, content: role.strokeColor, lineWidth: isStroke ? 1 : 0)
             .opacity(mergedEnabled ? 1 : 0.5)
         }
         .disabled(!mergedEnabled)
@@ -133,12 +91,12 @@ public struct MyButton: View {
         }
     }
     
-    func makeIcon(icon: Iconable) -> some View {
-        Image(icon: icon)
+    func makeIcon(icon: Image) -> some View {
+        icon
             .resizable()
             .renderingMode(.template)
             .frame(width: size.iconSize, height: size.iconSize)
-            .foreground(adjustedForeground)
+            .foregroundStyle(adjustedForeground)
     }
 }
 
@@ -155,27 +113,30 @@ private struct ButtonPreview: View {
                             VStack {
                                 MyButton(
                                     "Button",
+                                    size: size,
                                     role: role,
-                                    leadingIcon: Icons.ETC.Blank,
-                                    trailingIcon: Icons.ETC.Blank,
+                                    leadingIcon: .icon(.Blank),
+                                    trailingIcon: .icon(.Blank),
                                     expanded: true
-                                ) {}.size(size)
+                                ) {}
                                 MyButton(
                                     "Button",
+                                    size: size,
                                     role: role,
-                                    leadingIcon: Icons.ETC.Blank,
-                                    trailingIcon: Icons.ETC.Blank
-                                ) {}.size(size)
+                                    leadingIcon: .icon(.Blank),
+                                    trailingIcon: .icon(.Blank)
+                                ) {}
                                 MyButton(
                                     "Button",
+                                    size: size,
                                     role: role,
-                                    leadingIcon: Icons.ETC.Blank,
-                                    trailingIcon: Icons.ETC.Blank,
+                                    leadingIcon: .icon(.Blank),
+                                    trailingIcon: .icon(.Blank),
                                     isLoading: true
-                                ) {}.size(size)
-                                MyButton("Button", role: role, leadingIcon: Icons.ETC.Blank, trailingIcon: Icons.ETC.Blank, isEnabled: false) {}.size(size)
-                                MyButton("Button", role: role, leadingIcon: Icons.ETC.Blank, trailingIcon: Icons.ETC.Blank, isRounded: true) {}.size(size)
-                                MyButton("Button", role: role, leadingIcon: Icons.ETC.Blank, trailingIcon: Icons.ETC.Blank, isRounded: true, isStroke: true) {}.size(size)
+                                ) {}
+                                MyButton("Button", size: size, role: role, leadingIcon: .icon(.Blank), trailingIcon: .icon(.Blank), isEnabled: false) {}
+                                MyButton("Button", size: size, role: role, leadingIcon: .icon(.Blank), trailingIcon: .icon(.Blank), isRounded: true) {}
+                                MyButton("Button", size: size, role: role, leadingIcon: .icon(.Blank), trailingIcon: .icon(.Blank), isRounded: true, isStroke: true) {}
                             }
                         }
                     }

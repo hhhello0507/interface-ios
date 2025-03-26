@@ -13,15 +13,10 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/kean/Nuke.git", exact: "12.3.0")
     ],
     targets: [
         .target(
             name: "Interface",
-            dependencies: [
-                .product(name: "Nuke", package: "Nuke"),
-                .product(name: "NukeUI", package: "Nuke")
-            ],
             resources: [
                 .process("Resource/Font"),
                 .process("Resource/Assets.xcassets")

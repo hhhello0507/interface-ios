@@ -12,28 +12,13 @@ public extension Color {
     }
 }
 
-public extension Text {
-    func foreground(_ color: Colorable) -> Text {
-        self.foregroundColor(color.box.color)
-    }
-}
-
 public extension View {
-    func foreground(_ color: Colorable) -> some View {
-        self.foregroundStyle(color.box.color)
-    }
-    
-    func background(_ color: Colorable) -> some View {
-        self.background(color.box.color)
-    }
-    
-    func tint(_ color: Colorable) -> some View {
-        self.tint(color.box.color)
-    }
-}
-
-public extension Shape {
-    func fill(_ color: Colorable) -> some View {
-        self.fill(color.box.color)
+    func strokeBorder(_ cornerRadius: CGFloat = 0, content: Color, lineWidth: CGFloat = 1) -> some View {
+        self
+            .clipShape(.rect(cornerRadius: cornerRadius))
+            .overlay {
+                RoundedRectangle(cornerRadius: cornerRadius)
+                    .strokeBorder(content, lineWidth: lineWidth)
+            }
     }
 }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct MyRadio: View {
-    
     private let selected: Bool
     private let isEnabled: Bool
     private let action: () -> Void
@@ -24,12 +23,12 @@ public struct MyRadio: View {
                 if selected {
                     Circle()
                         .frame(width: 10.5, height: 10.5)
-                        .stroke(5.25, content: Colors.Primary.normal.box.color, lineWidth: 5)
+//                        .stroke(5.25, content: Colors.Primary.normal, lineWidth: 5)
                         .foregroundStyle(.clear)
                 } else {
                     Circle()
                         .frame(width: 14, height: 14)
-                        .stroke(7, content: Colors.Line.normal.box.color, lineWidth: 2)
+//                        .stroke(7, content: Colors.Line.normal.color, lineWidth: 2)
                         .foregroundStyle(.clear)
                 }
             }
@@ -59,7 +58,7 @@ public struct MyRadio: View {
                 }
             }
             .padding(16)
-            .background(Colors.Background.normal)
+            .background(.background(.normal))
             .registerWanted()
         }
     }

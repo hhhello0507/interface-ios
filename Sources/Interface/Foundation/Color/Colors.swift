@@ -8,17 +8,13 @@ import UIKit
 import AppKit
 #endif
 
-public protocol Colorable {
+private protocol Colorable {
     var box: ColorBox { get }
 }
 
-public struct ColorBox {
+private struct ColorBox {
     public let light: Color
     public let dark: Color
-    public init(_ light: PaletteProtocol, _ dark: PaletteProtocol) {
-        self.light = light.color
-        self.dark = dark.color
-    }
     
     public init(_ light: Color, _ dark: Color) {
         self.light = light
@@ -26,91 +22,93 @@ public struct ColorBox {
     }
 }
 
+
+private extension Colorable {
+    var color: Color {
+        @Environment(\.colorScheme) var colorScheme
+        return if colorScheme == .light {
+            box.light
+        } else {
+            box.dark
+        }
+    }
+}
+
 public enum Colors {
     private typealias P = Palette
     public enum Label: Colorable, CaseIterable {
-        case normal, strong, neutral, alternative, assistive, disable
-        public var box: ColorBox {
+        case normal, neutral, alternative, assistive, disable
+        fileprivate var box: ColorBox {
             switch self {
-            case .normal: ColorBox(P.Neutral.neutral5, P.Neutral.neutral99)
-            case .strong: ColorBox(P.Common.common100, P.Common.common00)
-            case .neutral: ColorBox(P.Neutral.neutral25, P.Neutral.neutral95)
-            case .alternative: ColorBox(P.Neutral.neutral40, P.Neutral.neutral90)
-            case .assistive: ColorBox(P.Neutral.neutral50, P.Neutral.neutral70)
-            case .disable: ColorBox(P.Neutral.neutral97, P.Neutral.neutral30)
+            case .normal: ColorBox(P.neutral5, P.neutral99)
+            case .neutral: ColorBox(P.neutral25, P.neutral80)
+            case .alternative: ColorBox(P.neutral60, P.neutral50)
+            case .assistive: ColorBox(P.neutral80, P.neutral30)
+            case .disable: ColorBox(P.neutral90, P.neutral20)
             }
         }
     }
     public enum Line: Colorable, CaseIterable {
         case normal, neutral, alternative
-        public var box: ColorBox {
+        fileprivate var box: ColorBox {
             switch self {
-            case .normal: ColorBox(P.Neutral.neutral90, P.Neutral.neutral50)
-            case .neutral: ColorBox(P.Neutral.neutral95, P.Neutral.neutral30)
-            case .alternative: ColorBox(P.Neutral.neutral97, P.Neutral.neutral25)
+            case .normal: ColorBox(P.neutral90, P.neutral50)
+            case .neutral: ColorBox(P.neutral95, P.neutral30)
+            case .alternative: ColorBox(P.neutral97, P.neutral25)
             }
         }
     }
     public enum Fill: Colorable, CaseIterable {
         case normal, neutral, alternative, assistive
-        public var box: ColorBox {
+        fileprivate var box: ColorBox {
             switch self {
-            case .normal: ColorBox(P.Neutral.neutral97, P.Neutral.neutral20)
-            case .neutral: ColorBox(P.Neutral.neutral95, P.Neutral.neutral25)
-            case .alternative: ColorBox(P.Neutral.neutral90, P.Neutral.neutral30)
-            case .assistive: ColorBox(P.Common.common00, P.Neutral.neutral60)
+            case .normal: ColorBox(P.neutral97, P.neutral20)
+            case .neutral: ColorBox(P.neutral95, P.neutral25)
+            case .alternative: ColorBox(P.neutral90, P.neutral30)
+            case .assistive: ColorBox(P.common100, P.neutral40)
             }
         }
     }
     public enum Background: Colorable, CaseIterable {
-        case normal, neutral, alternative
-        public var box: ColorBox {
+        case normal, alternative
+        fileprivate var box: ColorBox {
             switch self {
-            case .normal: ColorBox(P.Common.common00, P.Neutral.neutral15)
-            case .neutral: ColorBox(P.Neutral.neutral99, P.Neutral.neutral10)
-            case .alternative: ColorBox(P.Neutral.neutral99, P.Neutral.neutral7)
-            }
-        }
-    }
-    public enum Elevation: Colorable, CaseIterable {
-        case black1, black2, black3
-        public var box: ColorBox {
-            switch self {
-            case .black1: ColorBox(Color.black.opacity(0.02), Color(0xCCCCD6, opacity: 0.02))
-            case .black2: ColorBox(Color.black.opacity(0.04), Color(0xCCCCD6, opacity: 0.04))
-            case .black3: ColorBox(Color.black.opacity(0.06), Color(0xCCCCD6, opacity: 0.06))
-            }
-        }
-    }
-    public enum Static: Colorable, CaseIterable {
-        case white, black, clear
-        public var box: ColorBox {
-            switch self {
-            case .white: ColorBox(P.Common.common00, P.Common.common00)
-            case .black: ColorBox(P.Common.common100, P.Common.common100)
-            case .clear: ColorBox(.clear, .clear)
+            case .normal: ColorBox(.white, P.neutral10)
+            case .alternative: ColorBox(P.neutral97, P.neutral5)
             }
         }
     }
     public enum Primary: Colorable, CaseIterable {
         case normal, alternative, assistive
-        public var box: ColorBox {
+        fileprivate var box: ColorBox {
             switch self {
-            case .normal: ColorBox(CustomPalette.primary50, CustomPalette.primary50)
-            case .alternative: ColorBox(CustomPalette.primary50.opacity(0.65), CustomPalette.primary50.opacity(0.65))
-            case .assistive: ColorBox(CustomPalette.primary50.opacity(0.2), CustomPalette.primary50.opacity(0.2))
+            case .normal: ColorBox(Palette.blue50, Palette.blue50)
+            case .alternative: ColorBox(Palette.blue50.opacity(0.65), Palette.blue50.opacity(0.65))
+            case .assistive: ColorBox(Palette.blue50.opacity(0.24), Palette.blue50.opacity(0.2))
             }
         }
     }
-    public enum Status: Colorable, CaseIterable {
-        case negative, cautionary, positive
-        public var box: ColorBox {
-            switch self {
-            case .negative: ColorBox(P.Red.red50, P.Red.red50)
-            case .cautionary: ColorBox(P.Yellow.yellow50, P.Yellow.yellow50)
-            case .positive: ColorBox(P.Green.green50, P.Green.green50)
-            }
-        }
+}
+
+public extension ShapeStyle where Self == Color {
+    static func label(_ color: Colors.Label) -> Color {
+        color.color
+    }
+    
+    static func line(_ color: Colors.Line) -> Color {
+        color.color
+    }
+    
+    static func fill(_ color: Colors.Fill) -> Color {
+        color.color
+    }
+    
+    static func background(_ color: Colors.Background) -> Color {
+        color.color
+    }
+    
+    static func primary(_ color: Colors.Primary) -> Color {
+        color.color
     }
 }
 
@@ -119,25 +117,19 @@ private struct ColorsPreview: View {
         ScrollView {
             VStack(spacing: 0) {
                 ForEach(Colors.Label.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
+                    $0.color.frame(height: 30)
                 }
                 ForEach(Colors.Line.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
+                    $0.color.frame(height: 30)
                 }
                 ForEach(Colors.Fill.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
+                    $0.color.frame(height: 30)
                 }
                 ForEach(Colors.Background.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
-                }
-                ForEach(Colors.Elevation.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
-                }
-                ForEach(Colors.Static.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
+                    $0.color.frame(height: 30)
                 }
                 ForEach(Colors.Primary.allCases, id: \.self) {
-                    $0.box.color.frame(height: 30)
+                    $0.color.frame(height: 30)
                 }
             }
         }

@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct MyCardView<C>: View where C: View {
-    
     let title: String
     let headingAction: (() -> Void)?
     let content: () -> C
@@ -31,8 +30,8 @@ public struct MyCardView<C>: View where C: View {
             content()
         }
         .padding(16)
-        .background(Colors.Background.normal)
-        .cornerRadius(18, corners: .allCorners)
+        .background(.background(.normal))
+        .clipShape(.rect(cornerRadius: 18))
     }
     
     @ViewBuilder
@@ -40,19 +39,19 @@ public struct MyCardView<C>: View where C: View {
         HStack(spacing: 0) {
             Text(title)
                 .myFont(.headling1B)
-                .foreground(Colors.Label.normal)
+                .foregroundStyle(.label(.normal))
             Spacer()
             if headingAction != nil {
-                Image(icon: Icons.Arrow.ExpandArrow)
+                Image.icon(.ExpandArrow)
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 12, height: 12)
                     .rotationEffect(.degrees(180))
-                    .foreground(Colors.Label.assistive)
+                    .foregroundStyle(.label(.assistive))
             }
         }
         .padding(.horizontal, 6)
-        .background(Colors.Background.normal)
+        .background(.background(.normal))
     }
 }
 
@@ -65,6 +64,5 @@ public struct MyCardView<C>: View where C: View {
     }
     .padding(.horizontal, 15)
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Colors.Background.neutral)
     .registerWanted()
 }
