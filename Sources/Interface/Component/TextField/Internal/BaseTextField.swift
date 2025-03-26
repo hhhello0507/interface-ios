@@ -14,7 +14,6 @@ internal struct BaseTextField: View {
     private let hint: String
     @Binding private var text: String
     private let font: MyFont
-    private let supportText: String?
     
     // state
     private let isSecured: Bool
@@ -28,7 +27,6 @@ internal struct BaseTextField: View {
         _ hint: String,
         text: Binding<String>,
         font: MyFont,
-        supportText: String?,
         isSecured: Bool,
         isEnabled: Bool,
         isError: Bool,
@@ -37,7 +35,6 @@ internal struct BaseTextField: View {
         self.hint = hint
         self._text = text
         self.font = font
-        self.supportText = supportText
         self.isSecured = isSecured
         self.isEnabled = isEnabled
         self.isError = isError

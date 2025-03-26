@@ -9,7 +9,6 @@ public struct MyTextField: View {
     private let hint: String
     @Binding private var text: String
     private let font: MyFont
-    private let supportText: String?
     private let isSecured: Bool
     private let isEnabled: Bool
     private let isError: Bool
@@ -19,7 +18,6 @@ public struct MyTextField: View {
         _ hint: String = "",
         text: Binding<String>,
         font: MyFont = .headlineM,
-        supportText: String? = nil,
         isSecured: Bool = false,
         isEnabled: Bool = true,
         isError: Bool = false,
@@ -28,7 +26,6 @@ public struct MyTextField: View {
         self.hint = hint
         self._text = text
         self.font = font
-        self.supportText = supportText
         self.isSecured = isSecured
         self.isEnabled = isEnabled
         self.isError = isError
@@ -42,7 +39,6 @@ public struct MyTextField: View {
                 hint,
                 text: $text,
                 font: font,
-                supportText: supportText,
                 isSecured: isSecured && isHide,
                 isEnabled: isEnabled,
                 isError: isError,
@@ -77,19 +73,6 @@ public struct MyTextField: View {
                 .frame(height: 1)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
         }
-        .overlay {
-            if let supportText {
-                Text(supportText)
-                    .myFont(.labelM)
-                    .foregroundStyle(
-                        isError
-                        ? colors.errorColor
-                        : colors.foregroundColor
-                    )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
-                    .offset(y: 24)
-            }
-        }
         .focused($focused)
         .advancedFocus()
         .opacity(isEnabled ? 1 : 0.5)
@@ -100,8 +83,8 @@ private struct TextFieldPreview: View {
     @State private var text = ""
     var body: some View {
         VStack(spacing: 20) {
-            MyTextField("Label", text: $text, supportText: "Support Text")
-            MyTextField("Label", text: $text, supportText: "Support Text", isSecured: true, isError: true)
+            MyTextField("Label", text: $text)
+            MyTextField("Label", text: $text, isSecured: true, isError: true)
             MyTextField("Label", text: $text, isEnabled: false)
         }
         .registerWanted()
