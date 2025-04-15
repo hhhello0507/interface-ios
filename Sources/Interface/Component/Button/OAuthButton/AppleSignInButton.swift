@@ -1,10 +1,3 @@
-//
-//  SwiftUIView.swift
-//  
-//
-//  Created by hhhello0507 on 9/3/24.
-//
-
 import SwiftUI
 
 public struct AppleSignInButton: View {
@@ -15,9 +8,7 @@ public struct AppleSignInButton: View {
     }
     
     public var body: some View {
-        Button {
-            action()
-        } label: {
+        Button(action: action) {
             HStack(spacing: 8) {
                 Image.icon(.AppleLogo)
                     .resizable()

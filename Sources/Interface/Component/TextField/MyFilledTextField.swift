@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by hhhello0507 on 8/22/24.
-//
-
 import SwiftUI
 
 public struct MyFilledTextField: View {
@@ -115,4 +108,3 @@ private struct TextFieldPreview: View {
     TextFieldPreview()
         .preferredColorScheme(.dark)
 }
-

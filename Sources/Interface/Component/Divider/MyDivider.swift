@@ -30,10 +30,21 @@ public struct MyDivider: View {
     }
 }
 
-#Preview {
-    VStack {
-        MyDivider()
-        MyDivider(type: .medium)
-        MyDivider(type: .large)
+private struct DividerPreview: View {
+    var body: some View {
+        VStack {
+            MyDivider()
+            MyDivider(type: .medium)
+            MyDivider(type: .large)
+        }
     }
+}
+
+#Preview {
+    DividerPreview()
+}
+
+#Preview {
+    DividerPreview()
+        .preferredColorScheme(.dark)
 }

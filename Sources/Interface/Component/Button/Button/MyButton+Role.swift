@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by hhhello0507 on 8/19/24.
-//
-
 import SwiftUI
 
 public extension MyButton {

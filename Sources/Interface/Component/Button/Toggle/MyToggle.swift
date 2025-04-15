@@ -20,17 +20,20 @@ public struct MyToggle: View {
     }
 }
 
-#Preview {
-    VStack {
-        MyToggle(isOn: .constant(true))
-        MyToggle(isOn: .constant(false))
+private struct TogglePreview: View {
+    var body: some View {
+        VStack {
+            MyToggle(isOn: .constant(true))
+            MyToggle(isOn: .constant(false))
+        }
     }
 }
 
 #Preview {
-    VStack {
-        MyToggle(isOn: .constant(true))
-        MyToggle(isOn: .constant(false))
-    }
-    .preferredColorScheme(.dark)
+    TogglePreview()
+}
+
+#Preview {
+    TogglePreview()
+        .preferredColorScheme(.dark)
 }

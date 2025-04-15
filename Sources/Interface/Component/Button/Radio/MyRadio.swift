@@ -15,9 +15,7 @@ public struct MyRadio: View {
     }
     
     public var body: some View {
-        Button {
-            action()
-        } label: {
+        Button(action: action) {
             Circle()
                 .strokeBorder(selected ? .primary(.normal) : .line(.normal), lineWidth: selected ? 5 : 2)
                 .frame(width: 18, height: 18)
@@ -31,27 +29,33 @@ public struct MyRadio: View {
     }
 }
 
-#Preview {
-    struct RadioPreview: View {
-        @State var isChecked: Bool = true
-        
-        var body: some View {
-            VStack(spacing: 20) {
-                MyRadio(selected: isChecked) {
-                    isChecked.toggle()
-                }
-                MyRadio(selected: isChecked) {
-                    isChecked.toggle()
-                }
-                .disabled(true)
-                MyRadio(selected: false) {
-                    isChecked.toggle()
-                }
+private struct RadioPreview: View {
+    @State var isChecked: Bool = true
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            MyRadio(selected: isChecked) {
+                isChecked.toggle()
             }
-            .padding(16)
-            .background(.background(.normal))
-            .registerWanted()
+            MyRadio(selected: isChecked) {
+                isChecked.toggle()
+            }
+            .disabled(true)
+            MyRadio(selected: false) {
+                isChecked.toggle()
+            }
         }
+        .padding(16)
+        .background(.background(.normal))
+        .registerWanted()
     }
-    return RadioPreview()
+}
+
+#Preview {
+    RadioPreview()
+}
+
+#Preview {
+    RadioPreview()
+        .preferredColorScheme(.dark)
 }

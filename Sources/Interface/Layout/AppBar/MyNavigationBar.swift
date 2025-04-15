@@ -1,14 +1,6 @@
-//
-//  InfinityTopBar.swift
-//  DesignSystem
-//
-//  Created by dgsw8th71 on 4/8/24.
-//  Copyright © 2024 molohala. All rights reserved.
-//
-
 import SwiftUI
 
-public struct TopAppBarButton {
+public struct NavigationBarButton {
     public let icon: Image
     public let action: () -> Void
     
@@ -18,7 +10,7 @@ public struct TopAppBarButton {
     }
 }
 
-public enum TopAppBarType {
+public enum NavigationBarType {
     case `default`
     case small
 }
@@ -30,16 +22,16 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
     @Environment(\.dismiss) private var dismiss
     
     private let title: String
-    private let type: TopAppBarType
+    private let type: NavigationBarType
     private let background: Color
-    private let buttons: [TopAppBarButton]
+    private let buttons: [NavigationBarButton]
     private let trailingContent: () -> TC
     private let content: (EdgeInsets) -> C
     
     public static func `default`(
         title: String,
         background: Color = .background(.normal),
-        buttons: [TopAppBarButton] = [],
+        buttons: [NavigationBarButton] = [],
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
         @ViewBuilder content: @escaping (EdgeInsets) -> C
     ) -> Self {
@@ -56,7 +48,7 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
     public static func small(
         title: String,
         background: Color = .background(.normal),
-        buttons: [TopAppBarButton] = [],
+        buttons: [NavigationBarButton] = [],
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
         @ViewBuilder content: @escaping (EdgeInsets) -> C
     ) -> Self {
@@ -123,7 +115,7 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
         }
     }
     
-    func makeButton(button: TopAppBarButton) -> some View {
+    func makeButton(button: NavigationBarButton) -> some View {
         Button {
             button.action()
         } label: {

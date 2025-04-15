@@ -44,19 +44,25 @@ public struct MyCheckbox: View {
     }
 }
 
-#Preview {
-    struct CheckboxPreview: View {
-        @State var isChecked: Bool = true
-        
-        var body: some View {
-            VStack(spacing: 20) {
-                MyCheckbox(isOn: $isChecked)
-                MyCheckbox(isOn: $isChecked).disabled(true)
-            }
-            .padding(16)
-            .background(.background(.normal))
-            .registerWanted()
+private struct CheckboxPreview: View {
+    @State var isChecked: Bool = true
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            MyCheckbox(isOn: $isChecked)
+            MyCheckbox(isOn: $isChecked).disabled(true)
         }
+        .padding(16)
+        .background(.background(.normal))
+        .registerWanted()
     }
-    return CheckboxPreview()
+}
+
+#Preview {
+    CheckboxPreview()
+}
+
+#Preview {
+    CheckboxPreview()
+        .preferredColorScheme(.dark)
 }
