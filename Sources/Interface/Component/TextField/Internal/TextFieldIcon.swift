@@ -1,14 +1,6 @@
-//
-//  File.swift
-//  
-//
-//  Created by hhhello0507 on 8/21/24.
-//
-
 import SwiftUI
 
 internal struct TextFieldIcon: View {
-    
     let isHide: Bool
     let isSecured: Bool
     let isEnabled: Bool

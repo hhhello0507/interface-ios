@@ -30,8 +30,6 @@ public struct MyAlertView: View {
                 .ignoresSafeArea()
             
             alertView
-                .background(.background(.normal))
-                .clipShape(.rect(cornerRadius: 16))
                 .scaleEffect(scaleEffect)
                 .opacity(opacity)
         }
@@ -51,6 +49,8 @@ public struct MyAlertView: View {
         }
         .padding(18)
         .frame(width: 328)
+        .background(.background(.normal))
+        .clipShape(.rect(cornerRadius: 16))
     }
     
     @ViewBuilder
