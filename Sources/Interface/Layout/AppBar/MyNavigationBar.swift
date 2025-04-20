@@ -1,11 +1,16 @@
 import SwiftUI
 
-public struct NavigationBarButton {
-    public let icon: Image
-    public let action: () -> Void
+struct NavigationBarButton {
+    enum ButtonType {
+        case icon(Image)
+        case text(String)
+    }
     
-    public init(icon: Image, action: @escaping () -> Void) {
-        self.icon = icon
+    let type: ButtonType
+    let action: () -> Void
+    
+    init(_ type: ButtonType, action: @escaping () -> Void) {
+        self.type = type
         self.action = action
     }
 }
@@ -16,9 +21,7 @@ public enum NavigationBarType {
 }
 
 @available(iOS 15.0, macOS 12.0, *)
-public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
-    private let edgeInsets = EdgeInsets(top: 10, leading: 15, bottom: 0, trailing: 15)
-    
+struct MyNavigationBar<C, TC>: View where C: View, TC: View {
     @Environment(\.dismiss) private var dismiss
     
     private let title: String
@@ -26,14 +29,14 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
     private let background: Color
     private let buttons: [NavigationBarButton]
     private let trailingContent: () -> TC
-    private let content: (EdgeInsets) -> C
+    private let content: () -> C
     
-    public static func `default`(
+    static func `default`(
         title: String,
-        background: Color = .background(.normal),
+        background: Color = .background(.alternative),
         buttons: [NavigationBarButton] = [],
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
-        @ViewBuilder content: @escaping (EdgeInsets) -> C
+        @ViewBuilder content: @escaping () -> C
     ) -> Self {
         self.init(
             title: title,
@@ -45,12 +48,12 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
         )
     }
 
-    public static func small(
+    static func small(
         title: String,
-        background: Color = .background(.normal),
+        background: Color = .background(.alternative),
         buttons: [NavigationBarButton] = [],
         @ViewBuilder trailingContent: @escaping () -> TC = { EmptyView() },
-        @ViewBuilder content: @escaping (EdgeInsets) -> C
+        @ViewBuilder content: @escaping () -> C
     ) -> Self {
         self.init(
             title: title,
@@ -109,8 +112,9 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
                 .frame(height: 54)
                 .background(background)
                 .padding(.horizontal, 4)
-                content(edgeInsets)
+                content()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                Spacer()
             }
         }
     }
@@ -119,14 +123,23 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
         Button {
             button.action()
         } label: {
-            button.icon
-                .resizable()
-                .renderingMode(.template)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(.label(.alternative))
-                .opacity(0.5)
-                .padding(12)
+            switch button.type {
+            case .icon(let icon):
+                icon
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 32, height: 32)
+                    .foregroundStyle(.primary(.normal))
+                    .padding(12)
+            case .text(let text):
+                Text(text)
+                    .myFont(.bodyM)
+                    .foregroundStyle(.label(.neutral))
+                    .padding(12)
+            }
+            
         }
+        .scaledButton()
     }
 }
 
@@ -134,18 +147,18 @@ public struct MyNavigationBar<C, TC>: View where C: View, TC: View {
     MyNavigationBar.default(
         title: "제목",
         buttons: [
-            .init(icon: .icon(.Person)) {
+            .init(.icon(.icon(.Person))) {
                 
             }
         ]
-    ) { _ in
+    ) {
         
     }
     .registerWanted()
 }
 
 #Preview {
-    MyNavigationBar.small(title: "제목") { _ in
+    MyNavigationBar.small(title: "제목") {
         
     }
     .registerWanted()
